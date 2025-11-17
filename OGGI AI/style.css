@@ -1,0 +1,1524 @@
+:root {
+    /* Cores do modo escuro (padrão) */
+    --primary-color: #10a37f;
+    --secondary-color: #343541;
+    --accent-color: #565869;
+    --light-color: #343541;
+    --dark-color: #202123;
+    --white: #ffffff;
+    --gray-light: #8e8ea0;
+    --gray-dark: #40414f;
+    --border-radius: 8px;
+    --shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    --input-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    --message-gap: 12px;
+}
+
+/* Cores do modo claro */
+body.light-mode {
+    --primary-color: #10a37f;
+    --secondary-color: #f7f7f8;
+    --accent-color: #8e8ea0;
+    --light-color: #ffffff;
+    --dark-color: #f7f7f8;
+    --white: #000000;
+    --gray-light: #8e8ea0;
+    --gray-dark: #d1d5db;
+    --shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    --input-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+body {
+    background-color: var(--dark-color);
+    color: var(--white);
+    height: 100vh;
+    display: flex;
+    overflow: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 260px;
+    background-color: var(--dark-color);
+    color: var(--white);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease;
+    z-index: 100;
+    border-right: 1px solid var(--gray-dark);
+}
+
+.sidebar-header {
+    padding: 16px;
+    border-bottom: 1px solid var(--gray-dark);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.sidebar-header img {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+}
+
+.sidebar-header h1 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--white);
+}
+
+.new-chat-btn {
+    margin: 16px;
+    padding: 12px 16px;
+    background-color: var(--secondary-color);
+    color: var(--white);
+    border: 1px solid var(--gray-dark);
+    border-radius: var(--border-radius);
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+}
+
+.new-chat-btn:hover {
+    background-color: var(--gray-dark);
+}
+
+/* Seção de conversas ativas */
+.active-chats-section {
+    border-bottom: 1px solid var(--gray-dark);
+    padding-bottom: 16px;
+}
+
+.active-chats-section h3 {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--gray-light);
+    margin: 16px 0 8px;
+    padding: 0 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.active-chats-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 0 8px;
+}
+
+.active-chat-tab {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    background-color: var(--secondary-color);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--white);
+    transition: all 0.2s ease;
+    margin: 0 8px;
+    position: relative;
+}
+
+.active-chat-tab:hover {
+    background-color: var(--gray-dark);
+}
+
+.active-chat-tab.active {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+.active-chat-tab-close {
+    background: none;
+    border: none;
+    color: var(--gray-light);
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.active-chat-tab:hover .active-chat-tab-close {
+    opacity: 1;
+}
+
+.active-chat-tab-close:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--white);
+}
+
+.active-chat-tab-title {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Histórico de conversas */
+.history-section {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0 8px;
+}
+
+.history-section h3 {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--gray-light);
+    margin: 16px 0 8px;
+    padding: 0 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.history-item {
+    padding: 10px 16px;
+    border-radius: var(--border-radius);
+    margin-bottom: 2px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: background-color 0.2s ease;
+    color: var(--white);
+    font-size: 14px;
+    margin: 0 8px;
+}
+
+.history-item:hover {
+    background-color: var(--gray-dark);
+}
+
+.history-item.active {
+    background-color: var(--gray-dark);
+}
+
+.history-item svg {
+    flex-shrink: 0;
+    color: var(--gray-light);
+}
+
+.history-item span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Main Chat Area */
+.main-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    background-color: var(--light-color);
+}
+
+.chat-header {
+    padding: 12px 20px;
+    background-color: var(--dark-color);
+    border-bottom: 1px solid var(--gray-dark);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 10;
+}
+
+.chat-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.chat-title img {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+}
+
+.chat-title h1 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--white);
+}
+
+.header-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.theme-toggle-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 6px;
+    background-color: var(--secondary-color);
+    border: 1px solid var(--gray-dark);
+    color: var(--white);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.theme-toggle-btn:hover {
+    background-color: var(--gray-dark);
+    transform: scale(1.05);
+}
+
+.moon-icon {
+    display: none;
+}
+
+.light-mode .sun-icon {
+    display: none;
+}
+
+.light-mode .moon-icon {
+    display: block;
+}
+
+.sidebar-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+    color: var(--white);
+}
+
+.sidebar-toggle:hover {
+    background-color: var(--gray-dark);
+}
+
+/* Messages Container */
+.messages-container {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--message-gap);
+    background-color: var(--light-color);
+}
+
+.welcome-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.welcome-message p {
+    font-size: 18px;
+    color: var(--gray-light);
+}
+
+.message-wrapper {
+    display: flex;
+    width: 100%;
+}
+
+.message-wrapper.user {
+    justify-content: flex-end;
+}
+
+.message-content-wrapper {
+    display: flex;
+    gap: 16px;
+    max-width: 80%;
+}
+
+.message-wrapper.user .message-content-wrapper {
+    flex-direction: row-reverse;
+}
+
+.message-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 4px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.message-avatar.user {
+    background-color: var(--primary-color);
+    color: var(--white);
+    font-weight: 600;
+    font-size: 12px;
+}
+
+.message-avatar.bot {
+    background-color: var(--gray-light);
+}
+
+.message-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.message-text {
+    padding: 16px 20px;
+    border-radius: var(--border-radius);
+    font-size: 15px;
+    line-height: 1.5;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+.message-wrapper.user .message-text {
+    background-color: var(--gray-dark);
+    color: var(--white);
+}
+
+.message-wrapper.bot .message-text {
+    background-color: var(--secondary-color);
+    color: var(--white);
+    border: 1px solid var(--gray-dark);
+}
+
+/* Estilos para texto formatado da IA */
+.message-wrapper.bot .message-text strong {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.message-wrapper.bot .message-text br {
+    content: "";
+    display: block;
+    margin-bottom: 8px;
+}
+
+.message-wrapper.bot .message-text {
+    line-height: 1.6;
+}
+
+/* Typing Indicator */
+.typing-indicator {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 16px 20px;
+    background-color: var(--secondary-color);
+    border: 1px solid var(--gray-dark);
+    border-radius: var(--border-radius);
+}
+
+.typing-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--gray-light);
+    animation: typingAnimation 1.4s infinite ease-in-out;
+}
+
+.typing-dot:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.typing-dot:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.typing-dot:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes typingAnimation {
+    0%, 60%, 100% {
+        transform: translateY(0);
+        opacity: 0.6;
+    }
+    30% {
+        transform: translateY(-5px);
+        opacity: 1;
+    }
+}
+
+/* Input Area */
+.input-container {
+    padding: 20px;
+    background-color: var(--light-color);
+    border-top: 1px solid var(--gray-dark);
+}
+
+.input-wrapper {
+    display: flex;
+    align-items: flex-end;
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: var(--secondary-color);
+    border: 1px solid var(--gray-dark);
+    border-radius: var(--border-radius);
+    padding: 8px;
+    box-shadow: var(--input-shadow);
+}
+
+.message-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    resize: none;
+    padding: 12px 16px;
+    font-size: 15px;
+    line-height: 1.5;
+    max-height: 120px;
+    min-height: 24px;
+    background: transparent;
+    color: var(--white);
+}
+
+.message-input::placeholder {
+    color: var(--gray-light);
+}
+
+.send-button {
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
+    border: none;
+    background-color: var(--primary-color);
+    color: var(--white);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+}
+
+.send-button:hover:not(:disabled) {
+    background-color: #0d8c6d;
+}
+
+.send-button:disabled {
+    background-color: var(--gray-dark);
+    cursor: not-allowed;
+}
+
+/* Scrollbar personalizada */
+.messages-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+.messages-container::-webkit-scrollbar-track {
+    background: var(--light-color);
+}
+
+.messages-container::-webkit-scrollbar-thumb {
+    background: var(--gray-dark);
+    border-radius: 3px;
+}
+
+.messages-container::-webkit-scrollbar-thumb:hover {
+    background: var(--gray-light);
+}
+
+.history-section::-webkit-scrollbar,
+.active-chats-list::-webkit-scrollbar {
+    width: 4px;
+}
+
+.history-section::-webkit-scrollbar-track,
+.active-chats-list::-webkit-scrollbar-track {
+    background: var(--dark-color);
+}
+
+.history-section::-webkit-scrollbar-thumb,
+.active-chats-list::-webkit-scrollbar-thumb {
+    background: var(--gray-dark);
+    border-radius: 2px;
+}
+
+.history-section::-webkit-scrollbar-thumb:hover,
+.active-chats-list::-webkit-scrollbar-thumb:hover {
+    background: var(--gray-light);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        transform: translateX(-100%);
+    }
+
+    .sidebar.active {
+        transform: translateX(0);
+    }
+
+    .sidebar-toggle {
+        display: block;
+    }
+
+    .message-content-wrapper {
+        max-width: 90%;
+    }
+
+    .messages-container {
+        padding: 16px;
+    }
+
+    .input-container {
+        padding: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .message-content-wrapper {
+        max-width: 95%;
+    }
+
+    .message-text {
+        padding: 12px 16px;
+        font-size: 14px;
+    }
+
+    .welcome-message p {
+        font-size: 16px;
+    }
+    
+    .sidebar {
+        width: 100%;
+    }
+    
+    .header-controls {
+        gap: 4px;
+    }
+    
+    .theme-toggle-btn {
+        width: 36px;
+        height: 36px;
+    }
+    
+    .active-chat-tab,
+    .history-item {
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+}
+
+/*
+========================================
+== ESTILOS PARA TELA DE LOGIN DESLIZANTE ==
+========================================
+*/
+
+/* 1. O CORPO DA PÁGINA (FUNDO PRETO) */
+.login-body {
+    background-color: var(--dark-color); /* Fundo preto */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+    margin: -20px 0 50px; 
+    font-family: var(--font-family, 'Segoe UI', system-ui, -apple-system, sans-serif);
+    color: var(--white);
+    overflow: hidden;
+}
+
+/* 2. O CONTAINER PRINCIPAL (BRANCO) */
+.login-main-container {
+    background-color: #ffffff; /* Forçado a ser branco */
+    border-radius: var(--border-radius);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    position: relative;
+    overflow: hidden;
+    width: 900px; /* Box maior */
+    max-width: 100%;
+    min-height: 580px; /* Box maior */
+    color: #333; 
+}
+
+/* 3. CONTAINERS DOS FORMULÁRIOS (LOGIN E CADASTRO) */
+.form-container {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    transition: all 0.6s ease-in-out;
+}
+
+.sign-in-container {
+    left: 0;
+    width: 50%;
+    z-index: 2;
+}
+
+.sign-up-container {
+    left: 0;
+    width: 50%;
+    opacity: 0;
+    z-index: 1;
+}
+
+.login-main-container form {
+    background-color: #ffffff; /* Forçado a ser branco */
+    display: flex;
+    flex-direction: column;
+    padding: 0 50px;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.login-main-container h2 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.login-main-container .input-group {
+    width: 100%;
+    margin-bottom: 12px;
+}
+
+.login-main-container input {
+    background-color: #f7f7f8; /* Forçado a ser cinza claro */
+    border: 1px solid #eee; 
+    border-radius: 6px;
+    padding: 12px 15px;
+    margin: 0;
+    width: 100%;
+    font-size: 14px;
+    color: #333;
+}
+
+.login-main-container input:focus {
+    border-color: var(--primary-color);
+    outline: none;
+}
+
+.forgot-password {
+    color: var(--gray-light);
+    font-size: 14px;
+    text-decoration: none;
+    margin: 15px 0;
+}
+
+.forgot-password:hover {
+    color: var(--primary-color);
+}
+
+.auth-submit-btn {
+    border-radius: var(--border-radius);
+    border: 1px solid var(--dark-color);
+    background-color: var(--dark-color); /* Botão preto */
+    color: var(--white);
+    font-size: 14px;
+    font-weight: 600;
+    padding: 12px 45px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: transform 80ms ease-in, background-color 0.3s ease;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.auth-submit-btn:hover {
+    background-color: #333;
+}
+
+.auth-submit-btn:active {
+    transform: scale(0.95);
+}
+
+/* 4. O PAINEL DESLIZANTE (OVERLAY PRETO) */
+.overlay-container {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+    transition: transform 0.6s ease-in-out;
+    z-index: 100;
+}
+
+.overlay {
+    background: var(--dark-color);
+    color: var(--white);
+    position: relative;
+    left: -100%;
+    height: 100%;
+    width: 200%;
+    transform: translateX(0);
+    transition: transform 0.6s ease-in-out;
+}
+
+.overlay-panel {
+    position: absolute;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 40px;
+    height: 100%;
+    width: 50%;
+    text-align: center;
+    transform: translateX(0);
+    transition: transform 0.6s ease-in-out;
+}
+
+.overlay-logo-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.overlay-logo {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.overlay-logo-section span {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--gray-light);
+    letter-spacing: 1px;
+}
+
+.overlay-panel h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.overlay-panel p {
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: 0.5px;
+    margin: 20px 0 30px;
+}
+
+.ghost-btn {
+    border-radius: var(--border-radius);
+    border: 1px solid var(--white);
+    background-color: transparent;
+    color: var(--white);
+    font-size: 14px;
+    font-weight: 600;
+    padding: 12px 45px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: transform 80ms ease-in, background-color 0.3s ease, color 0.3s ease;
+    cursor: pointer;
+}
+
+.ghost-btn:hover {
+    background-color: var(--white);
+    color: var(--dark-color);
+}
+
+.ghost-btn:active {
+    transform: scale(0.95);
+}
+
+.overlay-left {
+    transform: translateX(-20%);
+}
+
+.overlay-right {
+    right: 0;
+    transform: translateX(0);
+}
+
+/* 5. A MÁGICA DA ANIMAÇÃO */
+.login-main-container.right-panel-active .sign-in-container {
+    transform: translateX(100%);
+    opacity: 0;
+    z-index: 1;
+}
+
+.login-main-container.right-panel-active .sign-up-container {
+    transform: translateX(100%);
+    opacity: 1;
+    z-index: 5;
+    animation: show 0.6s;
+}
+
+.login-main-container.right-panel-active .overlay-container {
+    transform: translateX(-100%);
+}
+
+.login-main-container.right-panel-active .overlay {
+    transform: translateX(50%);
+}
+
+.login-main-container.right-panel-active .overlay-left {
+    transform: translateX(0);
+}
+
+.login-main-container.right-panel-active .overlay-right {
+    transform: translateX(20%);
+}
+
+@keyframes show {
+    0%, 49.99% {
+        opacity: 0;
+        z-index: 1;
+    }
+    
+    50%, 100% {
+        opacity: 1;
+        z-index: 5;
+    }
+}
+
+/* 6. MENSAGENS DE ERRO/SUCESSO */
+.error-message {
+    color: #e74c3c;
+    font-size: 13px;
+    margin-top: 10px;
+    text-align: center;
+    height: 15px;
+}
+
+.success-message {
+    color: var(--primary-color);
+    font-size: 13px;
+    margin-top: 10px;
+    text-align: center;
+    height: 15px;
+}
+
+/* 7. RESPONSIVIDADE */
+@media (max-width: 900px) { 
+    .login-main-container {
+        width: 95%;
+        max-width: 420px;
+        min-height: 550px;
+    }
+    
+    .overlay-container {
+        display: none;
+    }
+    
+    .form-container {
+        width: 100%;
+    }
+    
+    .sign-in-container {
+        z-index: 2;
+    }
+    
+    .sign-up-container {
+        opacity: 0;
+        z-index: 1;
+    }
+    
+    .login-main-container.right-panel-active .sign-in-container {
+        transform: translateY(100%);
+        opacity: 0;
+        z-index: 1;
+    }
+    
+    .login-main-container.right-panel-active .sign-up-container {
+        transform: translateY(0);
+        opacity: 1;
+        z-index: 5;
+    }
+    
+    .mobile-switch-btn {
+        display: block;
+        background: none;
+        border: none;
+        color: var(--primary-color);
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        margin-top: 20px;
+    }
+}
+
+@media (min-width: 901px) { 
+    .mobile-switch-btn {
+        display: none;
+    }
+}
+
+/* ==================================
+== NOVO: ESTILOS DO MODAL DE SENHA ==
+==================================
+*/
+.hidden {
+    display: none !important; /* Força o desaparecimento */
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7); /* Fundo escuro semi-transparente */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-box {
+    background: #ffffff;
+    color: #333;
+    padding: 30px;
+    border-radius: var(--border-radius);
+    width: 100%;
+    max-width: 450px;
+    position: relative;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    z-index: 1001;
+}
+
+.modal-close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #aaa;
+    background: none;
+    border: none;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.modal-close-btn:hover {
+    color: #333;
+}
+
+.modal-box h2 {
+    color: #333;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.modal-box p {
+    color: #666;
+    font-size: 15px;
+    margin-bottom: 25px;
+}
+
+.modal-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-form .input-group {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.modal-form input {
+    width: 100%;
+    padding: 18px 20px;
+    font-size: 15px;
+}
+
+.modal-form .auth-submit-btn {
+    width: 100%;
+}
+
+.modal-message {
+    font-size: 14px;
+    margin-top: 15px;
+    height: 15px; /* Reserva espaço */
+}
+
+/* Re-usa as classes de mensagem de erro/sucesso */
+.modal-message.error-message {
+    color: #e74c3c;
+}
+.modal-message.success-message {
+    color: var(--primary-color);
+}
+/* ========================================================== */
+/* MUDANÇA: ESTILOS PARA LISTA ÚNICA DE CHATS (TIPO GEMINI) */
+/* ========================================================== */
+
+/* Remove estilos antigos de abas */
+.chat-tabs-container, .active-chat-tab {
+    display: none !important; 
+}
+
+/* Ajusta a seção de histórico para ocupar o espaço e ter scroll */
+.history-section {
+    flex: 1; /* Ocupa o espaço restante na sidebar */
+    overflow-y: auto; /* Adiciona scroll se a lista for grande */
+    padding: 0 8px 16px 8px; /* Padding inferior */
+}
+
+.history-section h3 {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--gray-light);
+    margin: 16px 8px 8px 8px; /* Ajusta margem */
+    padding: 0 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: sticky; /* Mantém o título "Histórico" visível */
+    top: 0;
+    background: var(--dark-color); /* Fundo para o título fixo */
+    z-index: 1;
+    padding-top: 10px; /* Espaço acima do título */
+    padding-bottom: 5px; /* Espaço abaixo do título */
+}
+
+/* Estilo do item da lista (antigo .history-item) */
+.history-item {
+    display: flex;
+    align-items: center;
+    gap: 12px; /* Espaço entre ícone e texto */
+    padding: 10px 16px; /* Padding interno */
+    margin: 0 8px 4px 8px; /* Margem entre itens */
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--white);
+    transition: background-color 0.2s ease;
+    position: relative; /* Para o botão delete */
+    overflow: hidden; /* Garante que o texto não vaze */
+    white-space: nowrap; /* Impede quebra de linha */
+    text-overflow: ellipsis; /* Adiciona "..." se o texto for longo */
+}
+
+.history-item:hover {
+    background-color: var(--gray-dark);
+}
+
+/* Estilo para o item ATIVO */
+.history-item.active {
+    background-color: var(--accent-color); /* Cor de destaque para o ativo */
+}
+
+.history-item svg {
+    flex-shrink: 0; /* Impede que o ícone esprema */
+    color: var(--gray-light);
+}
+
+.history-item span {
+    flex: 1; /* Ocupa o espaço restante */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding-right: 25px; /* Espaço para o botão delete */
+}
+
+/* Botão de Deletar (Lixeira) no Histórico */
+.history-item-delete {
+    background: none;
+    border: none;
+    color: var(--gray-light);
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0; /* Escondido por padrão */
+    transition: opacity 0.2s ease, color 0.2s ease;
+}
+
+.history-item:hover .history-item-delete {
+    opacity: 1; /* Mostra no hover do item */
+}
+
+.history-item-delete:hover {
+    background-color: rgba(231, 76, 60, 0.1);
+    color: #e74c3c; /* Cor vermelha */
+}
+
+/* Scrollbar do histórico */
+.history-section::-webkit-scrollbar {
+    width: 6px;
+}
+.history-section::-webkit-scrollbar-track {
+    background: var(--dark-color);
+    margin-top: 40px; /* Para não ficar atrás do H3 fixo */
+}
+.history-section::-webkit-scrollbar-thumb {
+    background: var(--gray-dark);
+    border-radius: 3px;
+}
+.history-section::-webkit-scrollbar-thumb:hover {
+    background: var(--gray-light);
+}
+
+/* ==================================
+== ESTILOS COMPLETOS DO MODAL DE DELETAR (ALINHAMENTO CORRIGIDO) ==
+================================== */
+.hidden {
+    display: none !important; 
+    opacity: 0; /* Ajuda a garantir que está escondido */
+    visibility: hidden;
+}
+
+.modal-overlay {
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7); 
+    display: flex; 
+    justify-content: center;
+    align-items: center; /* Centraliza a caixa verticalmente na tela */
+    z-index: 1000; 
+    opacity: 1; 
+    visibility: visible; 
+    transition: opacity 0.2s ease, visibility 0.2s ease; 
+}
+
+/* Estado escondido do overlay */
+/* --- BOTÕES CENTRALIZADOS HORIZONTALMENTE --- */
+.modal-buttons {
+    display: flex;
+    justify-content: center; /* Mudei de flex-end para center */
+    align-items: center;
+    gap: 15px;
+    margin-top: 20px;
+    padding: 10px 0;
+    min-height: 60px;
+    width: 100%;
+}
+
+.modal-buttons button {
+    appearance: none;
+    -webkit-appearance: none;
+    margin: 0;
+    border: 1px solid transparent;
+    box-sizing: border-box;
+    
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    
+    height: 42px;
+    min-width: 120px;
+    padding: 0 25px;
+    
+    border-radius: var(--border-radius, 8px);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+    line-height: 1;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+/* Mantenha os estilos de cores dos botões */
+.modal-cancel-btn {
+    background-color: var(--secondary-color, #f0f0f0); 
+    color: #666;
+    border-color: var(--gray-dark, #ccc); 
+}
+
+.modal-cancel-btn:hover {
+    background-color: var(--gray-dark, #ccc);
+    color: var(--white, #fff);
+    border-color: var(--gray-dark, #ccc);
+}
+
+.modal-confirm-delete-btn {
+    background-color: #e74c3c; 
+    color: #ffffff;
+    border-color: #e74c3c;
+}
+
+.modal-confirm-delete-btn:hover {
+    background-color: #c0392b; 
+    border-color: #c0392b;
+}
+/* Garante que o modal de senha (se existir) também funcione */
+#passwordResetModal h2 { color: #333; }
+#passwordResetModal p { color: #666; }
+.modal-form { display: flex; flex-direction: column; }
+.modal-form .input-group { width: 100%; margin-bottom: 15px; }
+.modal-form input { width: 100%; padding: 18px 20px; font-size: 15px; }
+.modal-form .auth-submit-btn { width: 100%; }
+.modal-message { font-size: 14px; margin-top: 15px; height: 15px; }
+.modal-message.error-message { color: #e74c3c; }
+.modal-message.success-message { color: var(--primary-color); }
+
+/* ============================================= */
+/* NOVO: ESTILOS DO PERFIL DO USUÁRIO */
+/* ============================================= */
+
+.user-profile {
+    position: relative; /* Para o dropdown */
+    cursor: pointer;
+}
+
+.profile-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%; /* Círculo */
+    background-color: var(--primary-color); /* Fundo verde */
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    border: 1px solid var(--gray-dark);
+    transition: box-shadow 0.2s ease;
+}
+
+.user-profile:hover .profile-avatar {
+     box-shadow: 0 0 0 3px rgba(16, 163, 127, 0.3); /* Efeito de anel no hover */
+}
+
+.profile-dropdown {
+    position: absolute;
+    top: calc(100% + 10px); /* Abaixo do avatar */
+    right: 0;
+    background-color: var(--secondary-color); /* Fundo escuro/claro do tema */
+    border: 1px solid var(--gray-dark);
+    border-radius: var(--border-radius);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    padding: 15px;
+    width: 250px; /* Largura do dropdown */
+    z-index: 100;
+    opacity: 0; /* Começa escondido */
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+}
+
+/* Mostra o dropdown quando o perfil é clicado (classe adicionada via JS) */
+.user-profile.active .profile-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid var(--gray-dark);
+}
+
+.profile-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--white); /* Assume que o dropdown tem cor escura/clara do tema */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.profile-email {
+    font-size: 13px;
+    color: var(--gray-light);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.profile-logout-btn {
+    background: none;
+    border: none;
+    color: var(--gray-light); /* Cor padrão */
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0; /* Só padding vertical */
+    width: 100%; /* Ocupa toda a largura */
+    text-align: left;
+    transition: color 0.2s ease;
+}
+
+.profile-logout-btn svg {
+    flex-shrink: 0;
+}
+
+.profile-logout-btn:hover {
+    color: #e74c3c; /* Vermelho no hover */
+}
+
+/* ========================================================== */
+/* RESPONSIVE DESIGN (TABLET E CELULAR) - CORRIGIDO */
+/* ========================================================== */
+
+/* --- Tablet (<= 768px) --- */
+@media (max-width: 768px) {
+    /* Esconde botão de recolher desktop */
+    .collapse-btn {
+        display: none;
+    }
+
+    /* Sidebar Mobile (Fica escondida por padrão) */
+    .sidebar {
+        position: fixed; /* Fora do fluxo normal */
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 260px !important; /* Largura fixa no tablet/mobile quando aberta */
+        transform: translateX(-100%); /* Escondida fora da tela */
+        transition: transform 0.3s ease;
+        z-index: 1000; /* Garante que fique acima de tudo */
+        border-right: 1px solid var(--gray-dark); /* Adiciona borda */
+        /* Garante que o body.sidebar-collapsed não afete */
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+
+    /* Estado ativo da Sidebar Mobile (quando o botão hamburguer é clicado) */
+    .sidebar.active {
+        transform: translateX(0); /* Traz para a tela */
+    }
+
+    /* Mostra o botão hamburguer (Mobile Toggle) */
+    .sidebar-toggle {
+        display: block; /* Mostra o botão hamburguer */
+    }
+
+    /* Ajusta o container principal para ocupar tudo */
+    .main-container {
+        margin-left: 0 !important; /* Remove margem deixada pela sidebar desktop */
+        width: 100%;
+        transition: none; /* Remove transição de margem desnecessária */
+    }
+
+    /* Garante que textos na sidebar voltem ao normal */
+    body.sidebar-collapsed .sidebar #sidebarTitle,
+    body.sidebar-collapsed .sidebar .new-chat-btn .btn-text,
+    body.sidebar-collapsed .sidebar .history-section h3,
+    body.sidebar-collapsed .sidebar .history-item span {
+       display: inline-block; 
+       opacity: 1;
+       visibility: visible;
+    }
+     body.sidebar-collapsed .sidebar .sidebar-header { justify-content: flex-start; }
+     body.sidebar-collapsed .sidebar .new-chat-btn,
+     body.sidebar-collapsed .sidebar .history-item { justify-content: flex-start; padding: 10px 16px; margin: 0 8px 4px 8px; }
+
+    /* Ajustes gerais de espaçamento no Tablet */
+    .chat-header { padding: 10px 15px; }
+    .messages-container { padding: 15px; }
+    .input-container { padding: 15px; }
+    .message-content-wrapper { max-width: 90%; }
+
+    /* --- Ajustes Login Responsivo (Tablet) --- */
+    .login-split-container {
+        flex-direction: column; 
+        width: 95%;
+        min-height: auto;
+    }
+    .login-left-panel { order: 2; text-align: center; }
+    .login-logo-section { align-items: center; }
+    .login-welcome-message { padding-top: 20px; text-align: center; }
+    .login-right-panel { order: 1; padding: 30px;}
+    .login-form-panel.hidden { position: relative; opacity: 0; height: 0; overflow: hidden; transform: none; margin-top: -20px; }
+    .login-switch-button, .login-switch-text-btn { display: none; } /* Esconde botões duplicados */
+
+    .login-main-container { /* Container do login deslizante */
+        width: 90%;
+        max-width: 420px;
+        min-height: 550px;
+    }
+    .overlay-container { display: none; } /* Esconde overlay no mobile */
+    .form-container { width: 100%; }
+    .sign-in-container { z-index: 2; }
+    .sign-up-container { opacity: 0; z-index: 1; }
+    .login-main-container.right-panel-active .sign-in-container { transform: translateY(100%); opacity: 0; z-index: 1; }
+    .login-main-container.right-panel-active .sign-up-container { transform: translateY(0); opacity: 1; z-index: 5; }
+    .mobile-switch-btn { display: block; /* Mostra botões de troca mobile */ }
+
+} /* Fim do @media (max-width: 768px) */
+
+
+/* --- Celular (<= 480px) --- */
+@media (max-width: 480px) {
+    /* MUDANÇA: Sidebar não ocupa 100%, deixa espaço para clicar fora */
+    .sidebar {
+        width: 85vw; /* Ocupa 85% da largura da tela */
+        max-width: 300px; /* Mas não mais que 300px */
+    }
+
+    /* Ajustes finos de espaçamento e fontes */
+    .sidebar-header { padding: 12px; }
+    .new-chat-btn { margin: 12px; padding: 10px 12px; }
+    .history-section h3 { margin: 12px 8px 6px 8px; padding: 0 8px; }
+    .history-item { padding: 8px 12px; font-size: 13px; margin: 0 8px 2px 8px; }
+    
+    .chat-header { padding: 8px 10px; }
+    .chat-title h1 { font-size: 14px; }
+    .header-controls { gap: 4px; }
+    .theme-toggle-btn { width: 36px; height: 36px; }
+
+    .messages-container { padding: 10px; gap: 10px; }
+    .message-content-wrapper { max-width: 95%; gap: 10px; }
+    .message-avatar { width: 28px; height: 28px; }
+    .message-text { padding: 10px 14px; font-size: 14px; }
+    .welcome-message p { font-size: 15px; }
+
+    .input-container { padding: 10px; }
+    .input-wrapper { padding: 6px; }
+    .message-input { padding: 10px 12px; font-size: 14px; }
+    .send-button { width: 32px; height: 32px; }
+
+    /* --- Ajustes Login Responsivo (Celular) --- */
+    .login-main-container { min-height: 500px; }
+    .login-main-container form { padding: 0 30px; }
+    .login-main-container h2 { font-size: 24px; }
+    .login-main-container p { font-size: 14px; margin-bottom: 20px;}
+    .login-main-container input { padding: 10px 15px; font-size: 14px;}
+    .auth-submit-btn, .ghost-btn { padding: 10px 30px; font-size: 13px;}
+
+} 
+

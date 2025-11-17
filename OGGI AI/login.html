@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - OGGI AI</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="login-body">
+
+    <div class="login-main-container" id="loginMainContainer">
+
+        <div class="form-container sign-up-container">
+            <form id="form-cadastro">
+                <h2>Crie sua Conta</h2>
+                <div class="input-group">
+                    <input type="text" id="nome-cadastro" placeholder="Nome" autocomplete="name" required>
+                </div>
+                <div class="input-group">
+                    <input type="email" id="email-cadastro" placeholder="Email" autocomplete="email" required>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="senha-cadastro" placeholder="Senha" autocomplete="new-password" required minlength="6">
+                </div>
+                <button type="submit" class="auth-submit-btn">Cadastrar</button>
+                <p id="cadastro-success" class="success-message"></p>
+                <p id="cadastro-error" class="error-message"></p>
+            </form>
+        </div>
+
+        <div class="form-container sign-in-container">
+            <form id="form-login">
+                <h2>Fazer Login</h2>
+                <div class="input-group">
+                    <input type="email" id="email-login" placeholder="Email" autocomplete="email" required>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="senha-login" placeholder="Senha" autocomplete="current-password" required>
+                </div>
+                <a href="#" class="forgot-password" id="forgotPasswordBtn">Esqueceu sua senha?</a>
+                <button type="submit" class="auth-submit-btn">Entrar</button>
+                <p id="login-error" class="error-message"></p>
+            </form>
+        </div>
+
+        <div class="overlay-container">
+            <div class="overlay">
+                
+                <div class="overlay-panel overlay-left">
+                    <div class="overlay-logo-section">
+                        <img src="imagens/logo.png" alt="OGGI Logo" class="overlay-logo">
+                        <span>OGGI AI</span>
+                    </div>
+                    <h1>Bem-vindo de Volta!</h1>
+                    <p>Para se manter conectado conosco, por favor, faça o login com suas informações pessoais.</p>
+                    <button class="ghost-btn" id="signInBtn">Entrar</button>
+                </div>
+                
+                <div class="overlay-panel overlay-right">
+                    <div class="overlay-logo-section">
+                        <img src="imagens/logo.png" alt="OGGI Logo" class="overlay-logo">
+                        <span>OGGI AI </span>
+                    </div>
+                    <h1>Olá, Agente!</h1>
+                    <p>Insira seus dados pessoais e comece sua jornada conosco.</p>
+                    <button class="ghost-btn" id="signUpBtn">Cadastrar</button>
+                </div>
+                
+            </div>
+        </div>
+
+    </div> <div id="modalOverlay" class="modal-overlay hidden">
+        <div id="passwordResetModal" class="modal-box">
+            <button id="closeModalBtn" class="modal-close-btn">&times;</button>
+            <h2>Recuperar Senha</h2>
+            <p>Digite seu e-mail e enviaremos um link para você redefinir sua senha.</p>
+            
+            <form id="resetForm" class="modal-form">
+                <div class="input-group">
+                    <input type="email" id="resetEmailInput" placeholder="Seu e-mail" required>
+                </div>
+                <button type="submit" class="auth-submit-btn">Enviar Link</button>
+                <p id="modalMessage" class="modal-message"></p>
+            </form>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="app/auth.js"></script>
+
+</body>
+</html>
